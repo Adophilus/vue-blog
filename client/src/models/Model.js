@@ -14,6 +14,7 @@ class Model {
     if (_id) {
       this.isNew = false
       this.fields._id = _id
+      this.fields._rev = _rev
     }
 
     this.__setProps()
@@ -29,12 +30,13 @@ class Model {
 
   static async get(server, options = {}, raw = true, fields = ['_id', '_rev']) {
     const { id, limit, where } = options
+    options = { fields, ...options }
 
     // GET MODEL BY ID
 
     if (id) {
       // console.log(`${this.idBase}${id}`)
-      let model = await server.get(this.name, options)
+      let model = (await server.get(`/${this.name}`, options)).data
 
       if (raw) {
         return model
@@ -44,7 +46,7 @@ class Model {
     }
 
     if (limit) {
-      let models = await server.get(this.name, options)
+      let models = (await server.get(`/${this.name}`, options)).data
 
       if (raw) {
         return models.docs
@@ -54,7 +56,7 @@ class Model {
     }
 
     if (where) {
-      let models = await server.get(this.name, options)
+      let models = (await server.get(`/${this.name}`, options)).data
 
       if (raw) {
         return models.docs
@@ -65,7 +67,7 @@ class Model {
 
     // GET ALL MODELS
 
-    let models = await server.get(this.name)
+    let models = (await server.get(`/${this.name}`)).data
 
     if (raw) {
       return models
@@ -103,9 +105,9 @@ class Model {
 
   async save() {
     if (this.isNew) {
-      await server.put(this.name, this.fields)
+      await this.server.put(this.name, this.fields)
     } else {
-      await server.post(`${this.name}/${this.fields._id}`, this.fields)
+      await this.server.post(`${this.name}/${this.fields._id}`, this.fields)
     }
   }
 }

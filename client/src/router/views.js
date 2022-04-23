@@ -1,9 +1,20 @@
-import LandingPage from '@/views/LandingPage'
+import PostView from '@/views/PostView'
+import RecentPostsView from '@/views/RecentPostsView'
 
 export default [
   {
     path: '/',
-    name: 'landing-page',
-    component: LandingPage
+    name: 'landing',
+    component: RecentPostsView
+  },
+  {
+    path: '/post/:id',
+    name: 'post',
+    component: PostView
+  },
+  {
+    path: '/post',
+    name: 'posts',
+    component: RecentPostsView
   }
 ]

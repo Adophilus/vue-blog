@@ -1,17 +1,21 @@
 <template>
-  <div class="grid grid-cols-2">
-    <div class="col-span-"><slot></slot></div>
-    <div class="col-span-4">
-    <SideBar />
+  <div>
+    <nav-bar />
+    <div class="grid grid-cols-2">
+      <div class="col-span-8"><slot></slot></div>
+      <div class="col-span-4">
+        <side-bar />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import SideBar from '@/components/page/SideBar'
+import NavBar from '@/components/page/NavBar'
+import SideBar from '@/components/sidebar/SideBar'
 
 export default {
   name: 'BasePage',
-  components: { SideBar }
+  components: { NavBar, SideBar }
 }
 </script>

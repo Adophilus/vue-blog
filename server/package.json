@@ -16,9 +16,9 @@
     "pouchdb-find": "^7.3.0"
   },
   "scripts": {
-    "start": "node src",
-    "dev": "nodemon src",
-    "db": "ssh dev.uche.lan -- 'cd .tmp && pouchdb-server --leveldown'",
+    "start:app": "node .",
+    "start:db": "cd %temp%\\db && pouchdb-server --leveldown",
+    "start:dev": "nodemon .",
     "test:unit": "mocha tests --bail --exit"
   },
   "devDependencies": {

@@ -3,14 +3,15 @@
 </template>
 
 <script>
-import axios from "axios"
+import axios from 'axios'
+axios.defaults.baseURL = 'http://localhost:3000/api/'
 
 export default {
-  name: "App",
-  data () {
+  name: 'App',
+  data() {
     return {
-      server: axios.create({
-        baseUrl: "http://localhost:3000/api/"
+      axios: axios.create({
+        baseUrl: 'http://localhost:3000/api/'
       })
     }
   }

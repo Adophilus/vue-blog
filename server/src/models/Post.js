@@ -50,7 +50,7 @@ class Post extends Model {
       title: chance.string(),
       content: chance.paragraph({ sentences: 10 }),
       author: chance.first(),
-      banner: 'https://thispersondoesnotexist.com/',
+      banner: 'http://localhost:3000/uploads/dummyimage-720x400.png',
       datePosted: Date.now()
     }
   }
