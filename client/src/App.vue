@@ -12,7 +12,16 @@ export default {
     return {
       axios: axios.create({
         baseUrl: 'http://localhost:3000/api/'
-      })
+      }),
+      config: {
+        site: {
+          name: 'Company Name',
+          title: 'Title'
+        },
+        social: {
+          twitter: 'https://twitter.com/adophilus'
+        }
+      }
     }
   }
 }

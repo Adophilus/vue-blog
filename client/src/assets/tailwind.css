@@ -4,6 +4,28 @@
 
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+
 * {
-    @apply transition duration-300
+  @apply transition duration-300;
+}
+
+.font-title {
+  @apply font-Montserrat;
+}
+
+.font-title-sm {
+  @apply font-title;
+    font-size: 2rem;
+}
+
+.font-title-md {
+  @apply font-title;
+  font-size: 3rem;
+}
+
+.font-title-lg {
+  @apply font-title;
+  font-size: 4rem;
 }

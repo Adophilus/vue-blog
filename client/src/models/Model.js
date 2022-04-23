@@ -35,8 +35,7 @@ class Model {
     // GET MODEL BY ID
 
     if (id) {
-      // console.log(`${this.idBase}${id}`)
-      let model = (await server.get(`/${this.name}`, options)).data
+      let model = (await server.get(`/${this.name}/${id}`, options)).data
 
       if (raw) {
         return model
