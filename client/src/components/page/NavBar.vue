@@ -7,7 +7,7 @@
       <div>
         <router-link
           :to="{ name: 'landing' }"
-          class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0"
+          class="flex title-font font-bold items-center text-gray-900 mb-4 md:mb-0"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -30,25 +30,25 @@
         class="hidden sm:flex flex-1 justify-end items-center gap-3 text-xl font-medium md:text-lg uppercase text-xs"
       >
         <router-link
-          :to="{ name: 'landing' }"
+          :to="{ name: 'recent-posts' }"
           active-class="text-primary"
-          class="mr-5 hover:text-primary"
+          class="mr-5 hover:text-primary font-bold"
           >Posts</router-link
         >
         <router-link
-          :to="{ name: 'landing' }"
+          :to="{ name: 'about' }"
           active-class="text-primary"
-          class="mr-5 hover:text-primary"
+          class="mr-5 hover:text-primary font-bold"
           >About</router-link
         >
         <router-link
-          :to="{ name: 'landing' }"
+          :to="{ name: 'contact' }"
           active-class="text-primary"
-          class="mr-5 hover:text-primary"
+          class="mr-5 hover:text-primary font-bold"
           >Contact</router-link
         >
         <button
-          class="inline-flex items-center bg-gray-100 border-0 py-3 px-3 border-2 border-primary hover:bg-white hover:border-2 hover:text-primary rounded md:mt-0 bg-primary text-white font-medium"
+          class="inline-flex items-center bg-gray-100 border-0 py-3 px-3 border-2 font-bold border-primary hover:bg-white hover:border-2 hover:text-primary rounded md:mt-0 bg-primary text-white font-medium"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

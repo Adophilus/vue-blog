@@ -23,6 +23,11 @@ export default {
         }
       }
     }
+  },
+  methods: {
+    truncate(text, stop = 60, clamp = '...') {
+      return text.slice(0, stop) + (stop < text.length ? clamp : '')
+    }
   }
 }
 </script>

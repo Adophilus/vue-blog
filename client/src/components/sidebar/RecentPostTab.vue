@@ -66,11 +66,6 @@
 <script>
 export default {
   name: 'RecentPostTab',
-  methods: {
-    truncate(text, stop = 60, clamp = '...') {
-      return text.slice(0, stop) + (stop < text.length ? clamp : '')
-    }
-  },
   props: {
     post: {
       type: Object

@@ -1,5 +1,5 @@
 <template>
-  <base-page>
+  <base-post-page>
     <section class="container mx-4 mt-4">
       <div class="mb-4">
         <header
@@ -13,16 +13,16 @@
         {{ post.content }}
       </div>
     </section>
-  </base-page>
+  </base-post-page>
 </template>
 
 <script>
-import BasePage from '@/components/page/BasePage'
+import BasePostPage from '@/components/page/BasePostPage'
 import PostMixin from '@/mixins/post'
 
 export default {
   name: 'PostView',
-  components: { BasePage },
+  components: { BasePostPage },
   mixins: [PostMixin],
   data() {
     return {
