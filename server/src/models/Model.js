@@ -92,6 +92,18 @@ class Model {
     return Date.now()
   }
 
+  get(field) {
+    if (field instanceof Array) {
+      let fields = {}
+      for (let _field in fields) {
+        fields[_field] = this.fields[_field]
+      }
+      return fields
+    }
+
+    return this.fields[field]
+  }
+
   set(fields) {
     this.fields = { ...this.fields, ...fields }
     return this

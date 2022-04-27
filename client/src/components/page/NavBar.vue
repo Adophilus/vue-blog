@@ -47,26 +47,28 @@
           class="mr-5 hover:text-primary font-bold"
           >Contact</router-link
         >
-        <button
-          class="inline-flex items-center bg-gray-100 border-0 py-3 px-3 border-2 font-bold border-primary hover:bg-white hover:border-2 hover:text-primary rounded md:mt-0 bg-primary text-white font-medium"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="feather feather-user"
+        <router-link :to="{ name: 'login' }">
+          <button
+            class="inline-flex items-center bg-gray-100 border-0 py-3 px-3 border-2 font-bold border-primary hover:bg-white hover:border-2 hover:text-primary rounded md:mt-0 bg-primary text-white font-medium"
           >
-            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-            <circle cx="12" cy="7" r="4"></circle>
-          </svg>
-          &nbsp; Login
-        </button>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="feather feather-user"
+            >
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            &nbsp; Login
+          </button>
+        </router-link>
       </div>
       <div class="flex sm:hidden flex-1 justify-end">
         <svg

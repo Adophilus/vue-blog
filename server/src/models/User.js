@@ -1,4 +1,5 @@
 const chance = require('chance').Chance()
+const SHA256 = require('crypto-js/sha256')
 const Model = require('./Model.js')
 
 class User extends Model {
@@ -63,6 +64,32 @@ class User extends Model {
     ]
   ) {
     return super.get(db, options, raw, fields)
+  }
+
+  static async encryptPassword(password) {
+    return SHA256(password).toString()
+  }
+
+  async hasPassword(password) {
+    return (
+      (await this.constructor.encryptPassword(password)) ===
+      this.fields.password
+    )
+  }
+
+  async updatePassword(password) {
+    this.fields.password = await this.constructor.encryptPassword(password)
+    return this.save()
+  }
+
+  async save() {
+    if (this.isNew) {
+      this.fields.password = await this.constructor.encryptPassword(
+        this.fields.password
+      )
+    }
+
+    return super.save()
   }
 
   static generateFields() {

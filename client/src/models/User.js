@@ -52,6 +52,15 @@ class User extends Model {
   ) {
     return super.get(server, options, raw, fields)
   }
+
+  static async login(server, login) {
+    try {
+      const res = await server.post(`/${this.name}/login`, login)
+      return res.data
+    } catch (err) {
+      return false
+    }
+  }
 }
 
 export default User
