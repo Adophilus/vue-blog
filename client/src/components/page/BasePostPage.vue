@@ -11,7 +11,7 @@
 
 <script>
 import BasePage from '@/components/page/BasePage'
-import SideBar from '@/components/sidebar/SideBar'
+import SideBar from '@/components/page/sidebar/SideBar'
 
 export default {
   name: 'BasePostPage',

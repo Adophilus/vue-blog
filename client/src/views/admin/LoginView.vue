@@ -14,7 +14,7 @@
           type="text"
           required
           placeholder=""
-          :value="username"
+          v-model="username"
         />
       </span>
       <span class="flex shadow-md mb-5 text-xs">
@@ -26,13 +26,12 @@
           type="password"
           required
           placeholder=""
-          :value="password"
+          v-model="password"
         />
       </span>
-      <a
+      <!-- <a
         class="text-primary hover:underline font-bold text-xs ml-auto cursor-pointer"
-        >Forget Password ?</a
-      >
+        >Forgot Password?</a> -->
       <button
         type="submit"
         class="border-2 border-primary hover:bg-primary hover:text-gray-100 mt-3 text-primary text-center p-3 px-4 text-sm rounded cursor-pointer font-bold w-full"

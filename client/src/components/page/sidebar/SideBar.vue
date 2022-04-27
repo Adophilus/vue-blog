@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import RecentPosts from '@/components/sidebar/RecentPosts.vue'
+import RecentPosts from '@/components/page/sidebar/RecentPosts.vue'
 
 export default {
   components: { RecentPosts },

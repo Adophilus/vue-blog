@@ -15,7 +15,7 @@
 
 <script>
 import PostMixin from '@/mixins/post'
-import PostTab from '@/components/sidebar/RecentPostTab'
+import PostTab from '@/components/page/sidebar/RecentPostTab'
 
 export default {
   name: 'RecentPosts',
