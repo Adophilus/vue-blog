@@ -112,7 +112,10 @@ describe('Admin', () => {
   it('should login the admin', (done) => {
     server
       .post(`/api/User/login`)
-      .query({ username: fields.username, password: fields.password })
+      .send({
+        username: fields.username,
+        password: fields.password
+      })
       .end((err, res) => {
         expect(err).to.be.null
         expect(res).to.have.status(200)

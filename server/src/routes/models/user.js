@@ -33,6 +33,7 @@ module.exports = ({ app, config, db }) => {
   app.post(`/api/${User.name}/login`, async (req, res) => {
     const { username, password } = req.body
     const userJson = (await User.get(db, { where: { username } }))[0]
+
     if (userJson) {
       const user = new User(db, userJson)
 
