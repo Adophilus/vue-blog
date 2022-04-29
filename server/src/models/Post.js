@@ -11,12 +11,16 @@ class Post extends Model {
     content: '',
     author: '',
     banner: '',
-    datePosted: ''
+    datePosted: '',
+    status: 'unpublished'
   }
 
-  static canChange = 'content'
+  static canChange = 'status'
 
-  constructor(db, { _id, _rev, title, content, author, banner, datePosted }) {
+  constructor(
+    db,
+    { _id, _rev, title, content, author, banner, datePosted, status }
+  ) {
     super(db, { _id, _rev })
     this.fields = {
       ...this.fields,
@@ -24,7 +28,8 @@ class Post extends Model {
       content,
       author,
       banner,
-      datePosted
+      datePosted,
+      status: status ? 'unpublished' : status
     }
   }
 
@@ -39,7 +44,8 @@ class Post extends Model {
       'content',
       'author',
       'banner',
-      'datePosted'
+      'datePosted',
+      'status'
     ]
   ) {
     return super.get(db, options, raw, fields)

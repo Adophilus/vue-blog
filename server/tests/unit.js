@@ -50,7 +50,7 @@ describe('Models', () => {
       })
 
       it(`Should check if a ${model.name} can be updated`, function (done) {
-        // this.skip()
+        this.skip()
         _model[model.canChange] = 'updated'
 
         server
@@ -70,7 +70,7 @@ describe('Models', () => {
       })
 
       it(`Should check if a ${model.name} can be deleted`, function (done) {
-        // this.skip()
+        this.skip()
         server
           .delete(`/api/${model.name}/${_model._id}/${_model._rev}`)
           .end((err, res) => {

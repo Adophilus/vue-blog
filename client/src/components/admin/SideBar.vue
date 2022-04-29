@@ -258,8 +258,8 @@
               Dashboard
             </a>
 
-            <a
-              href="#"
+            <router-link
+              :to="{ name: 'admin-posts' }"
               class="text-indigo-100 hover:bg-indigo-600 group flex items-center px-2 py-2 text-sm font-medium rounded-md"
             >
               <!-- Heroicon name: outline/collection -->
@@ -278,7 +278,7 @@
                 ></path>
               </svg>
               Posts
-            </a>
+            </router-link>
 
             <a
               href="#"
