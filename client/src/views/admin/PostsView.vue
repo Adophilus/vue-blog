@@ -85,9 +85,7 @@
       </div>
     </div>
     <div v-show="editor.displaying" class="flex flex-col">
-      <div
-        class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg"
-      >
+      <div class="overflow-hidden">
         <div class="py-6">
           <div
             class="flex flex-row gap-3 max-w-7xl mx-auto px-4 sm:px-6 md:px-8"
@@ -107,7 +105,10 @@
                 d="M15 19l-7-7 7-7"
               ></path>
             </svg>
-            <h1 v-if="editor.post" class="text-2xl font-semibold text-gray-900">
+            <h1
+              v-if="editor.post.title"
+              class="text-2xl font-semibold text-gray-900"
+            >
               Edit Post
             </h1>
             <h1 v-else class="text-2xl font-semibold text-gray-900">
@@ -115,15 +116,34 @@
             </h1>
           </div>
         </div>
-        <form @submit.prevent="" class="mx-auto">
-          <div>
-            <label for="title" class="sr-only">Title</label>
-            <input
-              type="text"
-              id="title"
-              class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-              placeholder="Title"
-            />
+        <form @submit.prevent="">
+          <div class="flex flex-col mx-auto w-5/6 gap-y-4">
+            <div>
+              <label for="title" class="sr-only">Title</label>
+              <input
+                type="text"
+                id="title"
+                class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                placeholder="Title"
+                v-model="editor.post.title"
+              />
+            </div>
+            <div>
+              <QuillEditor
+                theme="snow"
+                toolbar="full"
+                content="editor.post.content"
+                contentType="text"
+              />
+            </div>
+            <div class="flex items-end">
+              <button
+                type="button"
+                class="inline-flex uppercase items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              >
+                Post
+              </button>
+            </div>
           </div>
         </form>
       </div>
@@ -134,15 +154,20 @@
 <script>
 import BasePage from '@/components/admin/BasePage'
 import PostMixin from '@/mixins/post'
+import { QuillEditor } from '@vueup/vue-quill'
+import '@vueup/vue-quill/dist/vue-quill.snow.css'
 
 export default {
   name: 'PostsView',
-  components: { BasePage },
+  components: { BasePage, QuillEditor },
   data() {
     return {
       editor: {
         displaying: false,
-        post: false
+        post: {
+          title: '',
+          content: ''
+        }
       },
       posts: []
     }
@@ -156,7 +181,6 @@ export default {
   },
   async mounted() {
     this.posts = await this.fetchPosts()
-    // console.log(this.post)
   }
 }
 </script>

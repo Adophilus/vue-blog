@@ -14,6 +14,11 @@ export default [
     component: PostsView
   },
   {
+    path: '/admin/uploads',
+    name: 'admin-uploads',
+    component: PostsView
+  },
+  {
     path: '/admin/login',
     name: 'login',
     component: LoginView

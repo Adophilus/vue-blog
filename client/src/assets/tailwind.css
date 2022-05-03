@@ -17,7 +17,7 @@
 
 .font-title-sm {
   @apply font-title;
-    font-size: 2rem;
+  font-size: 2rem;
 }
 
 .font-title-md {
