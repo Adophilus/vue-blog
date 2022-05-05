@@ -21,7 +21,7 @@ export default [
     component: ContactView
   },
   {
-    path: '/posts/:id',
+    path: '/posts/:slug',
     name: 'post',
     component: PostView
   },

@@ -5,6 +5,7 @@ const Model = require('./Model.js')
 class User extends Model {
   static idBase = 'user:'
   static name = 'User'
+  static unique = ['username', 'email']
   static fields = {
     name: '',
     social: '',

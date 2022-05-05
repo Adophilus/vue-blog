@@ -35,7 +35,8 @@ class Model {
     // GET MODEL BY ID
 
     if (id) {
-      let model = (await server.get(`/${this.name}/${id}`, options)).data
+      let model = (await server.get(`/${this.name}/${id}`, { params: options }))
+        .data
 
       if (raw) {
         return model
@@ -45,7 +46,7 @@ class Model {
     }
 
     if (limit) {
-      let models = (await server.get(`/${this.name}`, options)).data
+      let models = (await server.get(`/${this.name}`, { params: options })).data
 
       if (raw) {
         return models.docs
@@ -55,10 +56,10 @@ class Model {
     }
 
     if (where) {
-      let models = (await server.get(`/${this.name}`, options)).data
+      let models = (await server.get(`/${this.name}`, { params: options })).data
 
       if (raw) {
-        return models.docs
+        return models
       }
 
       return models.docs.map((model) => new this(server, model))

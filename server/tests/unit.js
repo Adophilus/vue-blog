@@ -19,13 +19,13 @@ describe('Models', () => {
       it(`Should check if a ${model.name} can be created`, (done) => {
         server
           .put(`/api/${model.name}`)
-          .query(fields)
+          .send(fields)
           .end((err, res) => {
             expect(err).to.be.null
 
             let json = JSON.parse(res.text)
 
-            expect(json.ok).to.be.true
+            expect(json.ok, res.text).to.be.true
 
             _model = { _id: json.id, _rev: json.rev }
 
@@ -39,8 +39,9 @@ describe('Models', () => {
 
           let json = JSON.parse(res.text)
 
+          // console.log(json)
           for (let prop in model.fields) {
-            expect(json).to.have.property(prop)
+            expect(json, res.text).to.have.property(prop)
           }
 
           _model = json
@@ -55,13 +56,13 @@ describe('Models', () => {
 
         server
           .post(`/api/${model.name}`)
-          .query(_model)
+          .send(_model)
           .end((err, res) => {
             expect(err).to.be.null
 
             let json = JSON.parse(res.text)
 
-            expect(json.ok).to.be.true
+            expect(json.ok, res.text).to.be.true
 
             _model = { _id: json.id, _rev: json.rev }
 
@@ -78,7 +79,7 @@ describe('Models', () => {
 
             let json = JSON.parse(res.text)
 
-            expect(json.ok).to.be.true
+            expect(json.ok, res.text).to.be.true
 
             done()
           })
@@ -95,13 +96,13 @@ describe('Admin', () => {
   it('should create an admin', (done) => {
     server
       .put(`/api/User`)
-      .query(fields)
+      .send(fields)
       .end((err, res) => {
         expect(err).to.be.null
 
         let json = JSON.parse(res.text)
 
-        expect(json.ok).to.be.true
+        expect(json.ok, res.text).to.be.true
 
         _model = { _id: json.id, _rev: json.rev }
 
@@ -122,7 +123,7 @@ describe('Admin', () => {
 
         let json = JSON.parse(res.text)
 
-        expect(json.token).to.be.string
+        expect(json.token, res.text).to.be.string
 
         done()
       })

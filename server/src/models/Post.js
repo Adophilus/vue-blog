@@ -4,6 +4,7 @@ const Model = require('./Model.js')
 class Post extends Model {
   static idBase = 'post:'
   static name = 'Post'
+  static unique = ['slug']
   static fields = {
     _id: '',
     _rev: '',
@@ -12,6 +13,7 @@ class Post extends Model {
     author: '',
     banner: '',
     datePosted: '',
+    slug: '',
     status: 'unpublished'
   }
 
@@ -19,7 +21,7 @@ class Post extends Model {
 
   constructor(
     db,
-    { _id, _rev, title, content, author, banner, datePosted, status }
+    { _id, _rev, title, content, author, banner, datePosted, slug, status }
   ) {
     super(db, { _id, _rev })
     this.fields = {
@@ -29,7 +31,8 @@ class Post extends Model {
       author,
       banner,
       datePosted,
-      status: status ? 'unpublished' : status
+      slug: slug ? slug : title.replace(' ', '_'),
+      status: status ? status : 'unpublished'
     }
   }
 
@@ -45,6 +48,7 @@ class Post extends Model {
       'author',
       'banner',
       'datePosted',
+      'slug',
       'status'
     ]
   ) {

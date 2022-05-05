@@ -8,8 +8,17 @@
             class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg"
           >
             <div class="py-6">
-              <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-                <h1 class="text-2xl font-semibold text-gray-900">Posts</h1>
+              <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 flex flex-row">
+                <h1 class="inline text-2xl font-semibold text-gray-900">
+                  Posts
+                </h1>
+                <button
+                  type="button"
+                  @click="editPost()"
+                  class="ml-auto inline-flex uppercase items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                >
+                  <PlusSmIcon class="h-6 w-6" /> Create
+                </button>
               </div>
             </div>
             <table class="min-w-full divide-y divide-gray-200">
@@ -63,7 +72,7 @@
                     class="px-6 py-4 whitespace-nowrap text-sm font-medium text-primary"
                   >
                     <router-link
-                      :to="{ name: 'post', params: { id: post._id } }"
+                      :to="{ name: 'post', params: { slug: post.slug } }"
                       >View</router-link
                     >
                   </td>
@@ -71,7 +80,7 @@
                     class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium"
                   >
                     <a
-                      href="#"
+                      href="javascript:void(true)"
                       @click="editPost(post)"
                       class="text-primary hover:text-primary"
                       >Edit</a
@@ -106,7 +115,7 @@
               ></path>
             </svg>
             <h1
-              v-if="editor.post.title"
+              v-if="editor.status === 'editing'"
               class="text-2xl font-semibold text-gray-900"
             >
               Edit Post
@@ -132,13 +141,14 @@
               <QuillEditor
                 theme="snow"
                 toolbar="full"
-                content="editor.post.content"
-                contentType="text"
+                v-model:content="editorContent"
+                contentType="html"
               />
             </div>
             <div class="flex items-end">
               <button
                 type="button"
+                @click="postPost()"
                 class="inline-flex uppercase items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
                 Post
@@ -155,18 +165,20 @@
 import BasePage from '@/components/admin/BasePage'
 import PostMixin from '@/mixins/post'
 import { QuillEditor } from '@vueup/vue-quill'
+import { PlusSmIcon } from '@heroicons/vue/outline'
 import '@vueup/vue-quill/dist/vue-quill.snow.css'
 
 export default {
   name: 'PostsView',
-  components: { BasePage, QuillEditor },
+  components: { BasePage, QuillEditor, PlusSmIcon },
   data() {
     return {
+      editorContent: 'this is the content',
       editor: {
         displaying: false,
+        status: 'creating',
         post: {
-          title: '',
-          content: ''
+          title: ''
         }
       },
       posts: []
@@ -174,9 +186,18 @@ export default {
   },
   mixins: [PostMixin],
   methods: {
-    editPost(post) {
+    editPost(post = { title: '', content: '' }) {
       this.editor.displaying = true
+      this.editor.status = 'editing'
       this.editor.post = post
+      this.editorContent = post.content
+    },
+    async postPost() {
+      console.log(this.editorContent)
+      return
+      if (this.editor.status === 'creating') {
+        await this.createPost(this.editor.post)
+      }
     }
   },
   async mounted() {

@@ -9,7 +9,7 @@ class Model {
   constructor(db, { _id, _rev }) {
     this.db = db
     this.fields = {
-      _id: this.idBase
+      _id: this.constructor.idBase
     }
 
     if (_id) {
@@ -29,7 +29,10 @@ class Model {
   }
 
   static async get(db, options = {}, raw = true, fields = ['_id', '_rev']) {
-    const { id, limit, where } = options
+    let { id, limit, where } = options
+    if (where) {
+      where = JSON.parse(where)
+    }
 
     // GET MODEL BY ID
 
@@ -133,10 +136,9 @@ class Model {
 
   async __checkUniqueFields() {
     for (let uniqueField of this.constructor.unique) {
-      let _where = new Object()
-      _where[uniqueField] = this.fields[uniqueField]
-
-      let models = await this.constructor.get(this.db, { where: _where })
+      let where = new Object()
+      where[uniqueField] = this.fields[uniqueField]
+      let models = await this.constructor.get(this.db, { where })
       let model = models[0]
 
       if (model && model._id !== this.fields._id) {

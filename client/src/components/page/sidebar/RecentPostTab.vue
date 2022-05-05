@@ -1,6 +1,6 @@
 <template>
   <router-link
-    :to="{ name: 'post', params: { id: post._id } }"
+    :to="{ name: 'post', params: { slug: post.slug } }"
     class="inline-flex items-center mb-2"
   >
     <div class="container">

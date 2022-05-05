@@ -6,7 +6,7 @@ class Post extends Model {
 
   constructor(
     server,
-    { _id, _rev, title, content, author, banner, datePosted }
+    { _id, _rev, title, content, author, banner, datePosted, slug, status }
   ) {
     super(server, { _id, _rev })
     this.fields = {
@@ -15,7 +15,9 @@ class Post extends Model {
       content,
       author,
       banner,
-      datePosted
+      datePosted,
+      slug,
+      status
     }
   }
 
@@ -30,7 +32,9 @@ class Post extends Model {
       'content',
       'author',
       'banner',
-      'datePosted'
+      'datePosted',
+      'slug',
+      'status'
     ]
   ) {
     return super.get(server, options, raw, fields)

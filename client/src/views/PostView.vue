@@ -30,8 +30,7 @@ export default {
     }
   },
   async mounted() {
-    this.post = await this.fetchPostById(this.$route.params.id)
-    console.log(this.post)
+    this.post = await this.fetchPostBySlug(this.$route.params.slug)
   }
 }
 </script>
