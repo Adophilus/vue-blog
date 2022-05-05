@@ -8,8 +8,7 @@ module.exports = ({ app, db }) => {
     if (saved.ok) {
       res.json(saved)
     } else {
-      res.status(400)
-      res.json(saved)
+      res.status(400).json(saved)
     }
   })
 

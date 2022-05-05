@@ -105,9 +105,9 @@ class Model {
 
   async save() {
     if (this.isNew) {
-      await this.server.put(this.name, this.fields)
+      await this.server.put(this.constructor.name, this.fields)
     } else {
-      await this.server.post(`${this.name}/${this.fields._id}`, this.fields)
+      await this.server.post(this.constructor.name, this.fields)
     }
   }
 }

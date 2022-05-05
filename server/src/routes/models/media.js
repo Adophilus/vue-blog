@@ -8,8 +8,7 @@ module.exports = ({ app, db }) => {
     if (saved.ok) {
       res.json(saved)
     } else {
-      res.status(400)
-      res.json(saved)
+      res.status(400).json(saved)
     }
   })
 
@@ -29,8 +28,7 @@ module.exports = ({ app, db }) => {
     if (saved.ok) {
       res.json(saved)
     } else {
-      res.status(400)
-      res.json(saved)
+      res.status(400).json(saved)
     }
   })
 
@@ -40,8 +38,7 @@ module.exports = ({ app, db }) => {
     if (removed.ok) {
       res.json(removed)
     } else {
-      res.status(400)
-      res.json(removed)
+      res.status(400).json(removed)
     }
   })
 }

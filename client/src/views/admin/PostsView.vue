@@ -14,7 +14,7 @@
                 </h1>
                 <button
                   type="button"
-                  @click="editPost()"
+                  @click="showEditor()"
                   class="ml-auto inline-flex uppercase items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
                   <PlusSmIcon class="h-6 w-6" /> Create
@@ -81,7 +81,7 @@
                   >
                     <a
                       href="javascript:void(true)"
-                      @click="editPost(post)"
+                      @click="showEditor(post)"
                       class="text-primary hover:text-primary"
                       >Edit</a
                     >
@@ -101,6 +101,7 @@
           >
             <!-- Heroicon name: outline/chevron -->
             <svg
+              @click="hideEditor()"
               class="w-6 h-6 inline-block align-middle"
               fill="none"
               stroke="currentColor"
@@ -141,7 +142,7 @@
               <QuillEditor
                 theme="snow"
                 toolbar="full"
-                v-model:content="editorContent"
+                v-model:content="editor.post.content"
                 contentType="html"
               />
             </div>
@@ -178,7 +179,8 @@ export default {
         displaying: false,
         status: 'creating',
         post: {
-          title: ''
+          title: '',
+          content: ''
         }
       },
       posts: []
@@ -186,17 +188,29 @@ export default {
   },
   mixins: [PostMixin],
   methods: {
-    editPost(post = { title: '', content: '' }) {
+    showEditor(post = { title: '', content: '' }) {
       this.editor.displaying = true
-      this.editor.status = 'editing'
+      this.editor.status = post.title ? 'editing' : 'creating'
       this.editor.post = post
-      this.editorContent = post.content
+    },
+    hideEditor() {
+      this.editor.displaying = false
+      this.editor = { title: '', content: '' }
     },
     async postPost() {
-      console.log(this.editorContent)
-      return
       if (this.editor.status === 'creating') {
-        await this.createPost(this.editor.post)
+        try {
+          await this.createPost(this.editor.post)
+        } catch (err) {
+          console.log(err)
+        }
+      } else {
+        // (this.editor.status === 'editing')
+        try {
+          await this.updatePost(this.editor.post)
+        } catch (err) {
+          console.log(err)
+        }
       }
     }
   },

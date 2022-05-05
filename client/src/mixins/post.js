@@ -12,6 +12,10 @@ export default {
     async fetchPostBySlug(slug) {
       let posts = await Post.get(this.$root.axios, { where: { slug } })
       return posts[0] // slugs are unique
+    },
+    updatePost(post) {
+      post = new Post(this.$root.axios, post)
+      return post.save()
     }
   }
 }

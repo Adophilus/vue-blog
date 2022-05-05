@@ -31,7 +31,9 @@ class Model {
   static async get(db, options = {}, raw = true, fields = ['_id', '_rev']) {
     let { id, limit, where } = options
     if (where) {
-      where = JSON.parse(where)
+      if (!(where instanceof Object)) {
+        where = JSON.parse(where)
+      }
     }
 
     // GET MODEL BY ID
