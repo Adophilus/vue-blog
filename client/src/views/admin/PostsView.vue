@@ -25,6 +25,7 @@
             <div class="mt-4">
               <div class="-mx-2 -my-1.5 flex">
                 <button
+                  @click="changeEditorPostSlug()"
                   type="button"
                   class="bg-green-50 px-2 py-1.5 rounded-md text-sm font-medium text-green-800 hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-50 focus:ring-green-600"
                 >
@@ -190,6 +191,7 @@
             <div>
               <QuillEditor
                 ref="editor"
+                v-model:content="this.editor.post.content"
                 theme="snow"
                 toolbar="full"
                 contentType="html"
@@ -264,6 +266,14 @@ export default {
   },
   mixins: [PostMixin],
   methods: {
+    async changeEditorPostSlug() {
+      let slug = prompt('Enter a slug')
+      if (!slug) {
+        return
+      }
+      this.editor.post.slug = slug
+      await this.updatePost(this.editor.post)
+    },
     showEditor(post) {
       if (post) {
         this.editor.status = 'editing'
@@ -279,7 +289,9 @@ export default {
       this.editor.displaying = false
       this.editor.post = { title: '', content: '' }
     },
+    // saving post
     async postPost() {
+      // saving new post
       if (this.editor.status === 'creating') {
         try {
           let res = await this.createPost({
@@ -293,9 +305,11 @@ export default {
           console.log(err.response.data)
         }
       } else {
+        // updating post
         // (this.editor.status === 'editing')
         try {
-          await this.updatePost(this.editor.post)
+          let res = await this.updatePost(this.editor.post)
+          this.editor.post._rev = res.rev
           this.alerts.post.successful = true
         } catch (err) {
           console.log(err.response.data)
