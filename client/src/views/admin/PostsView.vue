@@ -189,9 +189,9 @@
             </div>
             <div>
               <QuillEditor
+                ref="editor"
                 theme="snow"
                 toolbar="full"
-                v-model:content="editor.post.content"
                 contentType="html"
               />
             </div>
@@ -268,6 +268,7 @@ export default {
       if (post) {
         this.editor.status = 'editing'
         this.editor.post = post
+        this.$refs.editor.setHTML(this.editor.post.content)
       } else {
         this.editor.status = 'creating'
         this.editor.post = { title: '', content: '' }
@@ -304,6 +305,10 @@ export default {
   },
   async mounted() {
     this.posts = await this.fetchPosts()
+
+    setTimeout(() => {
+      this.editorContent = 'Hello world'
+    }, 5000)
   }
 }
 </script>
