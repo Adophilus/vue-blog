@@ -9,6 +9,9 @@ export default {
     fetchPosts() {
       return Post.get(this.$root.axios)
     },
+    fetchPostById(id) {
+      return Post.get(this.$root.axios, { id })
+    },
     async fetchPostBySlug(slug) {
       let posts = await Post.get(this.$root.axios, { where: { slug } })
       return posts[0] // slugs are unique

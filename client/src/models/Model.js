@@ -104,11 +104,14 @@ class Model {
   }
 
   async save() {
+    let res
+
     if (this.isNew) {
-      await this.server.put(this.constructor.name, this.fields)
+      res = await this.server.put(this.constructor.name, this.fields)
     } else {
-      await this.server.post(this.constructor.name, this.fields)
+      res = await this.server.post(this.constructor.name, this.fields)
     }
+    return res.data
   }
 }
 

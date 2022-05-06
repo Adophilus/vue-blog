@@ -9,9 +9,7 @@
         </header>
         <div class="border-b-8 border-b-primary w-1/5"></div>
       </div>
-      <div class="mt-8">
-        {{ post.content }}
-      </div>
+      <div class="mt-8" v-html="post.content"></div>
     </section>
   </base-post-page>
 </template>

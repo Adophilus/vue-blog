@@ -1,6 +1,49 @@
 <template>
   <base-page>
-    <!-- This example requires Tailwind CSS v2.0+ -->
+    <!-- Alert messages -->
+    <div>
+      <!-- Posted alert message -->
+      <div v-show="alerts.post.successful" class="rounded-md bg-green-50 p-4">
+        <div class="flex">
+          <div class="flex-shrink-0">
+            <CheckCircleIcon
+              class="h-5 w-5 text-green-400"
+              aria-hidden="true"
+            />
+          </div>
+          <div class="ml-3">
+            <h3 class="text-sm font-medium text-green-800">Post successful</h3>
+            <div class="mt-2 text-sm text-green-700">
+              <p>
+                <a :href="editorPostViewUrl">
+                  http://{{ window.location.host }}/posts/{{
+                    this.editor.post.slug
+                  }}
+                </a>
+              </p>
+            </div>
+            <div class="mt-4">
+              <div class="-mx-2 -my-1.5 flex">
+                <button
+                  type="button"
+                  class="bg-green-50 px-2 py-1.5 rounded-md text-sm font-medium text-green-800 hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-50 focus:ring-green-600"
+                >
+                  Change
+                </button>
+                <button
+                  @click="alerts.post.successful = false"
+                  type="button"
+                  class="ml-3 bg-green-50 px-2 py-1.5 rounded-md text-sm font-medium text-green-800 hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-50 focus:ring-green-600"
+                >
+                  Dismiss
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Posts list -->
     <div v-show="!editor.displaying" class="flex flex-col">
       <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -93,6 +136,7 @@
         </div>
       </div>
     </div>
+    <!-- Editor -->
     <div v-show="editor.displaying" class="flex flex-col">
       <div class="overflow-hidden">
         <div class="py-6">
@@ -100,6 +144,7 @@
             class="flex flex-row gap-3 max-w-7xl mx-auto px-4 sm:px-6 md:px-8"
           >
             <!-- Heroicon name: outline/chevron -->
+            <!-- 
             <svg
               @click="hideEditor()"
               class="w-6 h-6 inline-block align-middle"
@@ -114,7 +159,11 @@
                 stroke-width="2"
                 d="M15 19l-7-7 7-7"
               ></path>
-            </svg>
+            </svg> -->
+            <ChevronLeftIcon
+              @click="hideEditor()"
+              class="w-6 h-6 inline-block align-middle"
+            />
             <h1
               v-if="editor.status === 'editing'"
               class="text-2xl font-semibold text-gray-900"
@@ -167,14 +216,40 @@ import BasePage from '@/components/admin/BasePage'
 import PostMixin from '@/mixins/post'
 import { QuillEditor } from '@vueup/vue-quill'
 import { PlusSmIcon } from '@heroicons/vue/outline'
+import { ChevronLeftIcon, CheckCircleIcon } from '@heroicons/vue/solid'
 import '@vueup/vue-quill/dist/vue-quill.snow.css'
 
 export default {
   name: 'PostsView',
-  components: { BasePage, QuillEditor, PlusSmIcon },
+  components: {
+    BasePage,
+    ChevronLeftIcon,
+    CheckCircleIcon,
+    QuillEditor,
+    PlusSmIcon
+  },
+  computed: {
+    editorPostViewUrl() {
+      if (this.editor.post.slug) {
+        return this.$router.resolve({
+          name: 'post',
+          params: { slug: this.editor.post.slug }
+        }).href
+      } else {
+        return this.$router.resolve({
+          name: 'recent-posts'
+        }).href
+      }
+    }
+  },
   data() {
     return {
-      editorContent: 'this is the content',
+      alerts: {
+        post: {
+          successful: false,
+          editing: false
+        }
+      },
       editor: {
         displaying: false,
         status: 'creating',
@@ -183,33 +258,46 @@ export default {
           content: ''
         }
       },
-      posts: []
+      posts: [],
+      window
     }
   },
   mixins: [PostMixin],
   methods: {
-    showEditor(post = { title: '', content: '' }) {
+    showEditor(post) {
+      if (post) {
+        this.editor.status = 'editing'
+        this.editor.post = post
+      } else {
+        this.editor.status = 'creating'
+        this.editor.post = { title: '', content: '' }
+      }
       this.editor.displaying = true
-      this.editor.status = post.title ? 'editing' : 'creating'
-      this.editor.post = post
     },
     hideEditor() {
       this.editor.displaying = false
-      this.editor = { title: '', content: '' }
+      this.editor.post = { title: '', content: '' }
     },
     async postPost() {
       if (this.editor.status === 'creating') {
         try {
-          await this.createPost(this.editor.post)
+          let res = await this.createPost({
+            title: this.editor.post.title,
+            content: this.editor.post.content
+          })
+          let post = await this.fetchPostById(res.id)
+          this.editor.post = post
+          this.alerts.post.successful = true
         } catch (err) {
-          console.log(err)
+          console.log(err.response.data)
         }
       } else {
         // (this.editor.status === 'editing')
         try {
           await this.updatePost(this.editor.post)
+          this.alerts.post.successful = true
         } catch (err) {
-          console.log(err)
+          console.log(err.response.data)
         }
       }
     }
