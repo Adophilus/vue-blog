@@ -1,6 +1,7 @@
 import LoginView from '@/views/admin/LoginView'
 import DashboardView from '@/views/admin/DashboardView'
 import PostsView from '@/views/admin/PostsView'
+import UploadsView from '@/views/admin/UploadsView'
 
 export default [
   {
@@ -16,7 +17,7 @@ export default [
   {
     path: '/admin/uploads',
     name: 'admin-uploads',
-    component: PostsView
+    component: UploadsView
   },
   {
     path: '/admin/login',

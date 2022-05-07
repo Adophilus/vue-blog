@@ -5,7 +5,7 @@
     <div class="md:pl-64 flex flex-col flex-1">
       <nav-bar />
 
-      <main>
+      <main class="overflow-hidden">
         <slot></slot>
       </main>
     </div>

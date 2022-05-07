@@ -44,6 +44,18 @@
         </div>
       </div>
     </div>
+    <div class="py-6">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 flex flex-row">
+        <h1 class="inline text-2xl font-semibold text-gray-900">Posts</h1>
+        <button
+          type="button"
+          @click="showEditor()"
+          class="ml-auto inline-flex uppercase items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        >
+          <PlusSmIcon class="h-6 w-6" /> Create
+        </button>
+      </div>
+    </div>
     <!-- Posts list -->
     <div v-show="!editor.displaying" class="flex flex-col">
       <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -51,20 +63,6 @@
           <div
             class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg"
           >
-            <div class="py-6">
-              <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 flex flex-row">
-                <h1 class="inline text-2xl font-semibold text-gray-900">
-                  Posts
-                </h1>
-                <button
-                  type="button"
-                  @click="showEditor()"
-                  class="ml-auto inline-flex uppercase items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                >
-                  <PlusSmIcon class="h-6 w-6" /> Create
-                </button>
-              </div>
-            </div>
             <table class="min-w-full divide-y divide-gray-200">
               <thead class="bg-gray-50">
                 <tr>
