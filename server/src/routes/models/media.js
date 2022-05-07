@@ -1,15 +1,33 @@
+const path = require('path')
 const Media = require('../../models/Media.js')
 
 module.exports = ({ app, db }) => {
-  // create Media
+  // upload Media
   app.put(`/api/${Media.name}`, async (req, res) => {
-    let obj = new Media(db, req.body)
-    let saved = await obj.save()
-    if (saved.ok) {
-      res.json(saved)
-    } else {
-      res.status(400).json(saved)
+    if (!req.files) {
+      return res.status(400).send('No files were uploaded.')
     }
+
+    let file = req.files.myFile
+    let obj = new Media(db, { name: file.name })
+    let saved = await obj.save()
+
+    if (!saved.ok) {
+      return res.status(400).json(saved)
+    }
+
+    console.log(file)
+
+    file.mv(
+      `uploads/${Media.split(saved.id)}.${path.extname(file.name)}`,
+      (err) => {
+        if (err) {
+          return res.status(500).send(err)
+        }
+
+        return res.json(saved)
+      }
+    )
   })
 
   // read Media

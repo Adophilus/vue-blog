@@ -44,7 +44,8 @@
         </div>
       </div>
     </div>
-    <div class="py-6">
+    <!-- Page Banner -->
+    <div v-show="!editor.displaying" class="py-6">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 flex flex-row">
         <h1 class="inline text-2xl font-semibold text-gray-900">Posts</h1>
         <button
@@ -142,23 +143,6 @@
           <div
             class="flex flex-row gap-3 max-w-7xl mx-auto px-4 sm:px-6 md:px-8"
           >
-            <!-- Heroicon name: outline/chevron -->
-            <!-- 
-            <svg
-              @click="hideEditor()"
-              class="w-6 h-6 inline-block align-middle"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M15 19l-7-7 7-7"
-              ></path>
-            </svg> -->
             <ChevronLeftIcon
               @click="hideEditor()"
               class="w-6 h-6 inline-block align-middle"
