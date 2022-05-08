@@ -173,7 +173,17 @@ export default {
     }
   },
   mixins: [MediaMixin],
-  methods: {},
+  methods: {
+    hideUploader() {
+      this.uploader.displaying = false
+    },
+    showUploader() {
+      this.uploader.displaying = true
+    },
+    uploadFile() {
+      console.log('uploading file')
+    }
+  },
   async mounted() {
     this.uploads = await this.fetchMedia()
   }

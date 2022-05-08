@@ -1,6 +1,5 @@
 <template>
   <div
-    :data-active="active"
     @dragenter.prevent="setActive"
     @dragover.prevent="setActive"
     @dragleave.prevent="setInactive"
@@ -41,41 +40,51 @@
   </div>
 </template>
 
-<script setup>
-import { ref, defineEmits, onMounted, onUnmounted } from 'vue'
-const emit = defineEmits(['files-dropped'])
+<script>
+import UploadFile from '@/utils/UploadFile'
 
-// Create `active` state and manage it with functions
-let active = ref(false)
+export default {
+  name: 'DropZone',
+  // emits: ['files-dropped'],
+  data() {
+    return {
+      active: false,
+      events: ['dragenter', 'dragover', 'dragleave', 'drop'],
+      files: []
+    }
+  },
+  methods: {
+    fileExists(file) {
+      return this.files.some(({ id }) => id === file.id)
+    },
+    preventDefaults(e) {
+      e.preventDefault()
+    },
+    onDrop(e) {
+      let files = [...e.dataTransfer.files]
+        .map((file) => new UploadFile(file))
+        .filter((file) => !this.fileExists(file))
 
-function setActive() {
-  active.value = true
+      // this.$emit('files-dropped', files)
+
+      this.files.push(...files)
+    },
+    setActive() {
+      this.active = true
+    },
+    setInactive() {
+      this.active = false
+    }
+  },
+  mounted() {
+    this.events.forEach((eventName) => {
+      document.body.addEventListener(eventName, this.preventDefaults)
+    })
+  },
+  unmounted() {
+    this.events.forEach((eventName) => {
+      document.body.removeEventListener(eventName, this.preventDefaults)
+    })
+  }
 }
-
-function setInactive() {
-  active.value = false
-}
-
-function onDrop(e) {
-  emit('files-dropped', [...e.dataTransfer.files])
-  console.log([...e.dataTransfer.files])
-}
-
-function preventDefaults(e) {
-  e.preventDefault()
-}
-
-const events = ['dragenter', 'dragover', 'dragleave', 'drop']
-
-onMounted(() => {
-  events.forEach((eventName) => {
-    document.body.addEventListener(eventName, preventDefaults)
-  })
-})
-
-onUnmounted(() => {
-  events.forEach((eventName) => {
-    document.body.removeEventListener(eventName, preventDefaults)
-  })
-})
 </script>
