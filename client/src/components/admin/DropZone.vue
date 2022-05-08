@@ -45,6 +45,7 @@ import UploadFile from '@/utils/UploadFile'
 
 export default {
   name: 'DropZone',
+  emits: ['file-upload'],
   data() {
     return {
       active: false,
@@ -61,10 +62,13 @@ export default {
     },
     onDrop(e) {
       let files = [...e.dataTransfer.files]
+      files
         .map((file) => new UploadFile(file))
         .forEach(async (file) => {
           this.files.push(file)
-          await file.upload()
+          file.upload((params) => {
+            this.$emit('file-upload', params)
+          })
         })
     },
     setActive() {

@@ -1,45 +1,7 @@
 <template>
   <base-page>
     <!-- Alert messages -->
-    <div>
-      <!-- Posted alert message -->
-      <div v-show="alerts.upload.successful" class="rounded-md bg-green-50 p-4">
-        <div class="flex">
-          <div class="flex-shrink-0">
-            <CheckCircleIcon
-              class="h-5 w-5 text-green-400"
-              aria-hidden="true"
-            />
-          </div>
-          <div class="ml-3">
-            <h3 class="text-sm font-medium text-green-800">
-              Upload successful!
-            </h3>
-            <div class="mt-2 text-sm text-green-700">
-              <p>Upload successful!</p>
-            </div>
-            <div class="mt-4">
-              <div class="-mx-2 -my-1.5 flex">
-                <button
-                  @click="changeEditorPostSlug()"
-                  type="button"
-                  class="bg-green-50 px-2 py-1.5 rounded-md text-sm font-medium text-green-800 hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-50 focus:ring-green-600"
-                >
-                  Change
-                </button>
-                <button
-                  @click="alerts.upload.successful = false"
-                  type="button"
-                  class="ml-3 bg-green-50 px-2 py-1.5 rounded-md text-sm font-medium text-green-800 hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-50 focus:ring-green-600"
-                >
-                  Dismiss
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <div></div>
     <!-- Page Banner -->
     <div v-show="!uploader.displaying" class="py-6">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 flex flex-row">
@@ -124,7 +86,7 @@
         <form @submit.prevent="uploadFile()">
           <div class="flex flex-col mx-auto w-5/6 gap-y-4">
             <div class="mt-1 sm:mt-0 sm:col-span-2">
-              <DropZone />
+              <DropZone @file-upload="displayFileUploadAlert" />
             </div>
             <div class="flex items-end">
               <button
@@ -146,7 +108,7 @@ import BasePage from '@/components/admin/BasePage'
 import DropZone from '@/components/admin/DropZone'
 import MediaMixin from '@/mixins/media'
 import { UploadIcon } from '@heroicons/vue/outline'
-import { CheckCircleIcon, ChevronLeftIcon } from '@heroicons/vue/solid'
+import { ChevronLeftIcon } from '@heroicons/vue/solid'
 import '@vueup/vue-quill/dist/vue-quill.snow.css'
 
 export default {
@@ -154,7 +116,6 @@ export default {
   components: {
     BasePage,
     DropZone,
-    CheckCircleIcon,
     ChevronLeftIcon,
     UploadIcon
   },
@@ -167,13 +128,14 @@ export default {
       },
       uploads: [],
       uploader: {
-        displaying: true
+        displaying: false
       },
       window
     }
   },
   mixins: [MediaMixin],
   methods: {
+    displayFileUploadAlert() {},
     hideUploader() {
       this.uploader.displaying = false
     },
