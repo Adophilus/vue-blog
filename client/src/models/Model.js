@@ -7,9 +7,7 @@ class Model {
 
   constructor(server, { _id, _rev }) {
     this.server = server
-    this.fields = {
-      _id: this.idBase
-    }
+    this.fields = {}
 
     if (_id) {
       this.isNew = false

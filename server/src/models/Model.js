@@ -8,15 +8,16 @@ class Model {
 
   constructor(db, { _id, _rev }) {
     this.db = db
-    this.fields = {
-      _id: this.constructor.idBase
-    }
+    this.fields = {}
 
     if (_id) {
       this.isNew = false
       this.fields._id = _id
       this.fields._rev = _rev
+    } else {
+      this.fields._id = `${this.constructor.idBase}${this.generateId()}`
     }
+
     this.__setProps()
   }
 
@@ -93,7 +94,7 @@ class Model {
     return models.docs.map((model) => new this(db, model))
   }
 
-  async generateId() {
+  generateId() {
     return Date.now()
   }
 
@@ -165,7 +166,6 @@ class Model {
     }
 
     if (this.isNew) {
-      this.fields._id = `${this.constructor.idBase}${await this.generateId()}`
       returnValue = await this.db.put(this.fields)
     } else {
       returnValue = await this.db.put(this.fields)

@@ -1,14 +1,25 @@
+import Media from '@/models/Media'
+import axios from '@/utils/axios'
+
 export default function (file) {
   this.upload = async () => {
-    console.log('uploading')
+    let reader = new FileReader()
+    reader.onloadend = (progressEvent) => {
+      // console.log(progressEvent)
+    }
+    reader.readAsBinaryString(file)
+
+    let media = new Media(axios, {
+      name: file.name,
+      type: file.type
+    })
+    await media.upload(btoa(reader.result))
   }
 
   const __generateId = () => {
-    return `${this.file.name}-${this.file.size}-${this.file.lastModified}-${this.file.type}`
+    return `${file.name}-${file.size}-${file.lastModified}-${file.type}`
   }
 
-  this.file = file
   this.uploaded = false
   this.id = __generateId()
-  console.log(this.id)
 }

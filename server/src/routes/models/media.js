@@ -1,33 +1,23 @@
 const path = require('path')
 const Media = require('../../models/Media.js')
+const { writeFileSync } = require('fs')
 
 module.exports = ({ app, db }) => {
   // upload Media
   app.put(`/api/${Media.name}`, async (req, res) => {
-    if (!req.files) {
-      return res.status(400).send('No files were uploaded.')
-    }
+    const { file } = req.body
+    let filename
 
-    let file = req.files.myFile
-    let obj = new Media(db, { name: file.name })
+    let obj = new Media(db, req.body)
     let saved = await obj.save()
 
     if (!saved.ok) {
       return res.status(400).json(saved)
     }
 
-    console.log(file)
+    filename = `${saved.id.replace(':', '_')}${path.extname(req.body.name)}`
 
-    file.mv(
-      `uploads/${Media.split(saved.id)}.${path.extname(file.name)}`,
-      (err) => {
-        if (err) {
-          return res.status(500).send(err)
-        }
-
-        return res.json(saved)
-      }
-    )
+    writeFileSync(path.join('uploads', filename), atob(file))
   })
 
   // read Media

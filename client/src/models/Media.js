@@ -22,6 +22,10 @@ class Video extends Model {
   ) {
     return super.get(server, options, raw, fields)
   }
+
+  upload(file) {
+    return this.server.put(`${this.constructor.name}`, { ...this.fields, file })
+  }
 }
 
 export default Video
