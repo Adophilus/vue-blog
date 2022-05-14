@@ -1,10 +1,13 @@
 <template>
   <base-page>
-    <div class="flex flex-col lg:flex-row mt-4 lg:mt-12 gap-x-3">
-      <div class="flex-grow"><slot></slot></div>
-      <div class="md:w-1/3">
-        <side-bar />
+    <div
+      class="flex flex-col lg:flex-row mt-4 lg:mt-12 mx-4 sm:mx-12 lg:mx-8 mt-4 gap-y-10 gap-x-24"
+    >
+      <div class="w-2/3">
+        <slot></slot>
       </div>
+
+      <side-bar class="flex-grow" />
     </div>
   </base-page>
 </template>

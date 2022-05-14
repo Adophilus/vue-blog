@@ -2,15 +2,20 @@ import Media from '@/models/Media'
 import axios from '@/utils/axios'
 
 export default function (file) {
-  this.upload = (callback = () => {}) => {
+  this.upload = () => {
     let reader = new FileReader()
 
-    reader.onloadend = async () => {
+    reader.onloadend = () => {
       let media = new Media(axios, {
         name: file.name,
         type: file.type
       })
-      callback({ upload: await media.upload(btoa(reader.result)), file })
+      media.upload(btoa(reader.result), (progressEvent) => {
+        this.uploaded = Math.round(
+          (progressEvent.loaded * 100) / progressEvent.total
+        )
+        console.log(this.uploaded)
+      })
     }
 
     reader.readAsBinaryString(file)
@@ -20,6 +25,7 @@ export default function (file) {
     return `${file.name}-${file.size}-${file.lastModified}-${file.type}`
   }
 
-  this.uploaded = false
+  this.uploaded = 0
   this.id = __generateId()
+  this.file = file
 }

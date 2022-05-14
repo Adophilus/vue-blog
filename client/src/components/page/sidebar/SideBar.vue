@@ -1,5 +1,5 @@
 <template>
-  <aside class="mt-10 lg:mt-0">
+  <aside>
     <recent-posts />
   </aside>
 </template>

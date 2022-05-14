@@ -4,7 +4,10 @@
     @dragover.prevent="setActive"
     @dragleave.prevent="setInactive"
     @drop.prevent="onDrop"
-    class="flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md"
+    :class="[
+      'flex justify-center px-6 pt-5 pb-6 border-2 border-dashed rounded-md',
+      active ? 'border-black' : 'border-gray-300'
+    ]"
   >
     <div class="space-y-1 text-center">
       <svg
@@ -65,11 +68,10 @@ export default {
       files
         .map((file) => new UploadFile(file))
         .forEach(async (file) => {
-          this.files.push(file)
-          file.upload((params) => {
-            this.$emit('file-upload', params)
-          })
+          this.$emit('file-upload', file)
+          file.upload()
         })
+      this.setInactive()
     },
     setActive() {
       this.active = true

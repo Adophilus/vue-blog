@@ -53,9 +53,13 @@ module.exports = ({ app, config, db }) => {
         const user = new User(db, userJson)
 
         if (await user.hasPassword(password)) {
-          userJson.token = jwt.sign({ id: user.get('_id') }, config.token.key, {
-            expiresIn: '20h'
-          })
+          userJson.token = jwt.sign(
+            { id: user.get('_id') },
+            config.jwtToken.key,
+            {
+              expiresIn: '20h'
+            }
+          )
 
           return res.json(userJson)
         }

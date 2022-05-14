@@ -1,7 +1,7 @@
 const chance = require('chance').Chance()
 const path = require('path')
 const Model = require('./Model.js')
-const { host, port } = require('../../.env').server
+const { host, port } = require('../config.js').server
 
 class Media extends Model {
   static idBase = 'media:'

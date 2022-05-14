@@ -23,8 +23,15 @@ class Video extends Model {
     return super.get(server, options, raw, fields)
   }
 
-  upload(file) {
-    return this.server.put(`${this.constructor.name}`, { ...this.fields, file })
+  upload(file, callback) {
+    return this.server.put(
+      `${this.constructor.name}`,
+      {
+        ...this.fields,
+        file
+      },
+      { onUploadProgress: callback }
+    )
   }
 }
 

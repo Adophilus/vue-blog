@@ -3,7 +3,7 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const fileUpload = require('express-fileupload')
 const PouchDB = require('pouchdb')
-const config = require('../.env')
+const config = require('./config.js')
 
 PouchDB.plugin(require('pouchdb-find'))
 

@@ -5,7 +5,7 @@
   >
     <div class="container">
       <div class="h-full rounded-lg">
-        <div class="p-6">
+        <div class="py-6">
           <!-- <h2
               class="
                 tracking-widest

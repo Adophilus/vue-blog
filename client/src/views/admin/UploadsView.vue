@@ -46,20 +46,20 @@
                 </tr>
               </thead>
               <tbody class="bg-white divide-y divide-gray-200">
-                <tr v-for="upload in uploads" :key="upload._id">
+                <tr v-for="media in media" :key="media._id">
                   <td
                     class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
                   >
-                    {{ upload.name }}
+                    {{ media.name }}
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {{ upload.type }}
+                    {{ media.type }}
                   </td>
                   <td
                     class="px-6 py-4 whitespace-nowrap text-sm font-medium text-primary"
                   >
-                    <a :href="upload.url">
-                      {{ upload.url }}
+                    <a :href="media.url">
+                      {{ media.url }}
                     </a>
                   </td>
                 </tr>
@@ -83,21 +83,26 @@
             <h1 class="text-2xl font-semibold text-gray-900">Upload File</h1>
           </div>
         </div>
-        <form @submit.prevent="uploadFile()">
-          <div class="flex flex-col mx-auto w-5/6 gap-y-4">
-            <div class="mt-1 sm:mt-0 sm:col-span-2">
-              <DropZone @file-upload="displayFileUploadAlert" />
-            </div>
-            <div class="flex items-end">
-              <button
-                type="submit"
-                class="inline-flex uppercase items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        <div class="flex flex-col mx-auto w-5/6 gap-y-4">
+          <div>
+            <ul role="list" class="space-y-3">
+              <li
+                v-for="upload in uploader.files"
+                :key="upload.id"
+                class="bg-white relative shadow overflow-hidden px-4 py-4 sm:px-6 sm:rounded-md"
               >
-                Upload
-              </button>
-            </div>
+                <span>{{ upload.file.name }}</span>
+                <div
+                  class="h-full top-0 left-0 absolute opacity-30 bg-indigo-600"
+                  :style="{ width: upload.uploaded + '%' }"
+                ></div>
+              </li>
+            </ul>
           </div>
-        </form>
+          <div class="mt-1 sm:mt-0 sm:col-span-2">
+            <DropZone @file-upload="displayUploadingFile" />
+          </div>
+        </div>
       </div>
     </div>
   </base-page>
@@ -126,16 +131,19 @@ export default {
           successful: false
         }
       },
-      uploads: [],
+      media: [],
       uploader: {
-        displaying: false
+        displaying: true,
+        files: []
       },
       window
     }
   },
   mixins: [MediaMixin],
   methods: {
-    displayFileUploadAlert() {},
+    displayUploadingFile(file) {
+      this.uploader.files.push(file)
+    },
     hideUploader() {
       this.uploader.displaying = false
     },
@@ -147,7 +155,7 @@ export default {
     }
   },
   async mounted() {
-    this.uploads = await this.fetchMedia()
+    this.media = await this.fetchMedia()
   }
 }
 </script>

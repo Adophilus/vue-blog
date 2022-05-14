@@ -3,7 +3,7 @@
     <div
       class="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden"
     >
-      <router-link :to="{ name: 'post', params: { id: post._id } }">
+      <router-link :to="{ name: 'post', params: { slug: post.slug } }">
         <img
           class="lg:h-48 md:h-36 w-full object-cover object-center"
           src="https://dummyimage.com/720x400"
@@ -16,7 +16,7 @@
         >
           CATEGORY
         </h2> -->
-        <router-link :to="{ name: 'post', params: { id: post._id } }">
+        <router-link :to="{ name: 'post', params: { slug: post.slug } }">
           <h1
             class="title-font text-lg font-bold hover:text-primary text-gray-900 mb-3"
           >
@@ -29,7 +29,7 @@
         <div class="flex items-center flex-wrap">
           <router-link
             class="text-indigo-500 inline-flex hover:text-black items-center md:mb-2 lg:mb-0"
-            :to="{ name: 'post', params: { id: post._id } }"
+            :to="{ name: 'post', params: { slug: post.slug } }"
           >
             Learn More
             <svg
